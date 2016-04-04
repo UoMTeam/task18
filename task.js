@@ -61,25 +61,30 @@ function render() {
         var element = mkdiv();
         element.innerHTML = "<span>" + numbers[i] + "</span>";
         element.addEventListener("click", function () {
-            clDelete()
+            clDelete(this)
         }, false);
         document.getElementById("wrap").appendChild(element);
     }
 }
 
-function clDelete() {
-    var element = event.target;
+function clDelete(evt) {
+    if (window.event) {
+        evt = window.event;
+        var element = evt.target;
+    }else{
+        var element = evt;
+    }
     console.log(element.nodeName);
     var value;
     if (element.nodeName == "DIV") {
         value = element.getElementsByTagName("span")[0].innerHTML;
     }
-    if(element.nodeName == "SPAN"){
+    if (element.nodeName == "SPAN") {
         value = element.innerHTML;
     }
     var ind = numbers.indexOf(value);
     numbers.splice(ind, 1);
-    alert("The kicked out number was "+value);
+    alert("The kicked out number was " + value);
     render();
 
 }
